@@ -3,17 +3,36 @@
 import math
 import numpy as np
 from gym import utils
+from gym.spaces import Box
 from gym.envs.mujoco import mujoco_env
 
 
-class PointEnv(mujoco_env.MujocoEnv, utils.EzPickle):
+class PointEnv(mujoco_env.MuJocoPyEnv, utils.EzPickle):
     FILE = "point.xml"
     ORI_IND = 2
     
+    metadata = {
+        'render_modes': [
+            "human",
+            "rgb_array",
+            "depth_array",
+            "single_rgb_array",
+            "single_depth_array",
+        ], 
+        'render_fps': 50    
+    }
+
     def __init__(self, file_path=None, expose_all_qpos=True):
         self._expose_all_qpos = expose_all_qpos
         
-        mujoco_env.MujocoEnv.__init__(self, file_path, 1)
+        ndim = 6 if expose_all_qpos else 4
+        observation_space = Box(
+            low = -np.inf, 
+            high = np.inf, 
+            shape = (ndim,),
+            dtype=np.float64
+        )
+        mujoco_env.MuJocoPyEnv.__init__(self, file_path, 1, observation_space=observation_space)
         utils.EzPickle.__init__(self)
     
     @property
