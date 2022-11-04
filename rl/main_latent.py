@@ -3,6 +3,10 @@ def get_args():
     import argparse
     parser = argparse.ArgumentParser()
     
+    # Convenience args for testing
+    parser.add_argument('--run-mode', type=str, default="train")
+    parser.add_argument('--render', action="store_true")
+
     parser.add_argument('--env_name', type=str, default='PointMaze-v1')
     parser.add_argument('--test_env_name', type=str, default='PointMazeTest-v1')
     parser.add_argument('--seed', type=int, default=123)
@@ -100,4 +104,9 @@ if __name__ == '__main__':
     
     from rl.launcher_latent import launch
     algo = launch(args)
-    algo.run()
+    if args.run_mode == "train":
+        algo.run()
+    elif args.run_mode == "eval-train":
+        algo.run_train_env_plan_eval()
+    elif args.run_mode == "eval-test":
+        algo.run_test_env_plan_eval()

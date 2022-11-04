@@ -201,6 +201,8 @@ class Algo(BaseAlgo):
                 sub_goals = self.planner.get_subgoals(ob, bg.copy())
                 a = self.agent.get_actions(ob, sub_goals)
                 observation, _, _, info = env.step(a)
+                if self.args.render: 
+                    env.render()
                 ob = observation['observation']
                 bg = observation['desired_goal']
                 ag = observation['achieved_goal']
