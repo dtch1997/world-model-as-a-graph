@@ -45,6 +45,19 @@ The implementation of
 
 The training scripts are provided in `scripts` folder. 
 
+## Quickstart
+
+To play an existing model:
+```
+source scripts/test_pointmaze.sh
+```
+To visualize the landmarks, use `rl.main_latent_viz_landmarks` instead of `rl.main_latent`
+
+To train a new model: 
+```
+source scripts/train_pointmaze.sh
+```
+
 ## Citations
 
 Please cite our paper as:
